@@ -1,0 +1,39 @@
+<div class="row">
+  <h1>Listagem de entradas de estoque</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>
+          <button class="btn btn-primary" (click)="productInputInsertService.showModalInsert()">Nova entrada</button>
+        </td>
+        <td colspan="4">
+          <product-input-search-form (onSearch)="search($event)"></product-input-search-form>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 5%;" [sortColumn]="sortColumn" columnName="id" (onSort)="sort($event)">ID</td>
+        <td style="width: 75%;" [sortColumn]="sortColumn" columnName="product_name" (onSort)="sort($event)">Produto</td>
+        <td style="width: 10%;">Qtd.</td>
+        <td style="width: 15%;" [sortColumn]="sortColumn" columnName="created_at" (onSort)="sort($event)">Criado em</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let input of inputs | paginate: {itemsPerPage: 10, currentPage: pagination.page, totalItems: pagination.totalItems}">
+        <td>{{input.id}}</td>
+        <td>{{input.product.name}}</td>
+        <td>{{input.amount}}</td>
+        <td>{{input.created_at.date | date: 'dd/mm/yyyy'}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
+</div>
+
+<product-input-new-modal (onSuccess)="productInputInsertService.onInsertSuccess($event)" (onError)="productInputInsertService.onInsertError($event)"></product-input-new-modal>
+<!--
+<product-edit-modal [productId]="productId" (onSuccess)="productEditService.onEditSuccess($event)" (onError)="productEditService.onEditError($event)"></product-edit-modal>
+
+<product-delete-modal [productId]="productId" (onSuccess)="productDeleteService.onDeleteSuccess($event)" (onError)="productDeleteService.onDeleteError($event)"></product-delete-modal>
+-->
