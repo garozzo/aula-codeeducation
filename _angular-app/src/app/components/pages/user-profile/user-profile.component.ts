@@ -52,7 +52,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
+  get fieldsOptions(): any {
+    return fieldsOptions;
+  }
+  
   submit() {
 
     const data = Object.assign({}, this.form.value);
